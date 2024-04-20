@@ -304,27 +304,27 @@ function purchaser_bond_data() {
                         // }
                         x: {
                             ticks: {
-                                color: '#fff', // Color of the x-axis labels
+                                color: '#fff',
                             },
                             grid: {
-                                color: '#0dcaf044', // Color of the x-axis grid lines
+                                color: '#0dcaf044',
                             },
                             border: {
                                 width: 2,
-                                color: '#fff', // <-------------- Color of the x-axis
+                                color: '#fff',
                             },
                             beginAtZero: true
                         },
                         y: {
                             ticks: {
-                                color: '#fff', // Color of the x-axis labels
+                                color: '#fff',
                             },
                             grid: {
-                                color: '#0dcaf044', // Color of the x-axis grid lines
+                                color: '#0dcaf044',
                             },
                             border: {
                                 width: 2,
-                                color: '#fff', // <-------------- Color of the x-axis
+                                color: '#fff',
                             },
                         }
                     },
@@ -499,27 +499,27 @@ function polparty_bond_data() {
                         // }
                         x: {
                             ticks: {
-                                color: '#fff', // Color of the x-axis labels
+                                color: '#fff',
                             },
                             grid: {
-                                color: '#0dcaf044', // Color of the x-axis grid lines
+                                color: '#0dcaf044',
                             },
                             border: {
                                 width: 2,
-                                color: '#fff', // <-------------- Color of the x-axis
+                                color: '#fff',
                             },
                             beginAtZero: true
                         },
                         y: {
                             ticks: {
-                                color: '#fff', // Color of the x-axis labels
+                                color: '#fff',
                             },
                             grid: {
-                                color: '#0dcaf044', // Color of the x-axis grid lines
+                                color: '#0dcaf044',
                             },
                             border: {
                                 width: 2,
-                                color: '#fff', // <-------------- Color of the x-axis
+                                color: '#fff',
                             },
                         }
                     },
@@ -776,10 +776,10 @@ function polparty_comapny_contri() {
                         data: ddset
                     }],
                     colorFrom: (c) => getColor(),
-                    colorTo:  (c) => getColor(),
+                    colorTo: (c) => getColor(),
                 },
                 options: {
-                    response: true,
+                    responsive: true,
                     // maintainAspectRatio: false,
                     plugins: {
                         legend: {
@@ -953,7 +953,7 @@ function company_polparty_contri() {
                 plugins: [plugin, ChartDataLabels],
             });
             return data
-        }).then(data=>{
+        }).then(data => {
 
             try {
                 Chart.getChart('q5canvassankey').destroy()
@@ -1008,10 +1008,10 @@ function company_polparty_contri() {
                         data: ddset
                     }],
                     colorFrom: (c) => getColor(),
-                    colorTo:  (c) => getColor(),
+                    colorTo: (c) => getColor(),
                 },
                 options: {
-                    response: true,
+                    responsive: true,
                     // maintainAspectRatio: false,
                     plugins: {
                         legend: {
@@ -1023,7 +1023,7 @@ function company_polparty_contri() {
                         },
                         title: {
                             display: true,
-                            text: 'Sankey Diagram of Purchases (in Cr)',
+                            text: 'Sankey Diagram of Donations (in Cr)',
                             color: '#fff'
                         },
                         customCanvasBackgroundColor: {
@@ -1179,6 +1179,397 @@ function amount_for_all_parties() {
 amount_for_all_parties()
 
 
+
+function bonus1() {
+
+    fetch('/bonus1', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            try {
+                Chart.getChart('bonuscnv1').destroy()
+            }
+            catch (e) {
+
+            }
+            let cavpar = document.getElementById('bonusg1')
+            try {
+                cavpar.lastChild.remove()
+            } catch (e) { }
+            let cnv = document.createElement('canvas')
+            cnv.id = 'bonuscnv1'
+            // cnv.style.height = "100vh"
+            cavpar.appendChild(cnv);
+            document.getElementById('bonusg1svbtn').style.display = 'inline';
+
+            data.sort(function (a, b) {
+                return b[0] - a[0]
+            })
+
+            let ctx = document.getElementById('bonuscnv1');
+
+            const plugin = {
+                id: 'customCanvasBackgroundColor',
+                beforeDraw: (chart, args, options) => {
+                    const { ctx } = chart;
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.fillStyle = options.color || '#99ffff';
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore();
+                }
+            };
+            let totl = 0;
+            for (let row of data) {
+                totl += parseInt(row[0])
+            }
+            // console.log(totl)
+            let party_name = [];
+            let ev = [];
+            for (let row of data) {
+                party_name.push(row[1].toTitleCase())
+                ev.push(row[0] / 10000000)
+            }
+            // console.log(ddset)
+            let mc = new Chart(ctx, {
+
+                type: 'pie',
+                data: {
+                    labels: party_name,
+                    datasets: [{
+                        label: 'Unkown donor encashed value',
+                        data: ev,
+                    }]
+
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Pie Chart describing amount of bonds encashed by political party which had no donor data (unspecified donor)',
+                            color: '#fff'
+                        },
+                        customCanvasBackgroundColor: {
+                            color: '#495057',
+                        },
+                        datalabels: {
+                            display: 'auto',
+                            color: '#fff',
+                            backgroundColor: '#000',
+                            borderRadius: 10
+                        }
+                    }
+                },
+                plugins: [plugin, ChartDataLabels],
+            });
+            document.getElementById('bonus1totl').innerText = `Total encashed amount with unspecified donors: ₹ ${Math.round((totl / 10000000 + Number.EPSILON) * 1000) / 1000} Cr`
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+
+}
+
+bonus1()
+
+
+
+
+
+function bonus2() {
+
+    fetch('/bonus2', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            try {
+                Chart.getChart('bonuscnv2').destroy()
+            }
+            catch (e) {
+
+            }
+            let cavpar = document.getElementById('bonusg2')
+            try {
+                cavpar.lastChild.remove()
+            } catch (e) { }
+            let cnv = document.createElement('canvas')
+            cnv.id = 'bonuscnv2'
+            // cnv.style.height = "100vh"
+            cavpar.appendChild(cnv);
+            document.getElementById('bonusg2svbtn').style.display = 'inline';
+
+            data.sort(function (a, b) {
+                return a[2] - b[2]
+            })
+
+            let ctx = document.getElementById('bonuscnv2');
+
+            const plugin = {
+                id: 'customCanvasBackgroundColor',
+                beforeDraw: (chart, args, options) => {
+                    const { ctx } = chart;
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.fillStyle = options.color || '#99ffff';
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore();
+                }
+            };
+            let tcount = 0;
+            let tamt = 0;
+            let lbls = [];
+            let amt_ls = [];
+            let count_ls = []
+            for (let row of data) {
+                tcount += parseInt(row[0])
+                count_ls.push(row[0])
+                amt_ls.push(row[1])
+                tamt += parseInt(row[1])
+                lbls.push(row[2])
+            }
+            // console.log(ddset)
+            let mc = new Chart(ctx, {
+
+                type: 'line',
+                data: {
+                    labels: lbls,
+                    datasets: [{
+                        label: 'Percentage of Amount',
+                        data: amt_ls.map(item => item * 100 / tamt),
+
+                    },
+                    {
+                        label: 'Percentage of Bonds Sold',
+                        data: count_ls.map(item => item * 100 / tcount),
+                    }]
+
+                },
+                options: {
+                    scales: {
+                        // y: {
+                        //     beginAtZero: true
+                        // }
+                        x: {
+                            ticks: {
+                                color: '#fff',
+                            },
+                            grid: {
+                                color: '#0dcaf044',
+                            },
+                            border: {
+                                width: 2,
+                                color: '#fff',
+                            },
+                            beginAtZero: true
+                        },
+                        y: {
+                            ticks: {
+                                color: '#fff',
+                            },
+                            grid: {
+                                color: '#0dcaf044',
+                            },
+                            border: {
+                                width: 2,
+                                color: '#fff',
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Denomination wise sale of electoral bonds',
+                            color: '#fff'
+                        },
+                        customCanvasBackgroundColor: {
+                            color: '#495057',
+                        }
+                    }
+                },
+                plugins: [plugin],
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+
+}
+
+bonus2()
+
+
+
+
+
+
+
+
+function bonus3() {
+
+    fetch('/bonus3', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            try {
+                Chart.getChart('bonuscnv3').destroy()
+            }
+            catch (e) {
+
+            }
+            let cavpar = document.getElementById('bonusg3')
+            try {
+                cavpar.lastChild.remove()
+            } catch (e) { }
+            let cnv = document.createElement('canvas')
+            cnv.id = 'bonuscnv3'
+            // cnv.style.height = "100vh"
+            cavpar.appendChild(cnv);
+            document.getElementById('bonusg3svbtn').style.display = 'inline';
+
+            data.sort(function (a, b) {
+                return b[3] - a[3]
+            })
+            data = data.slice(0, 20)
+
+            let ctx = document.getElementById('bonuscnv3');
+
+            const plugin = {
+                id: 'customCanvasBackgroundColor',
+                beforeDraw: (chart, args, options) => {
+                    const { ctx } = chart;
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.fillStyle = options.color || '#99ffff';
+                    ctx.fillRect(0, 0, chart.width, chart.height);
+                    ctx.restore();
+                }
+            };
+            let lbls = [];
+            let p1 = [];
+            let p2 = []
+            for (let row of data) {
+                p1.push(row[1])
+                p2.push(row[2])
+                lbls.push(row[0])
+            }
+            // console.log(ddset)
+            let mc = new Chart(ctx, {
+
+                type: 'radar',
+                data: {
+                    labels: lbls,
+                    datasets: [
+                    {
+                        label: 'INC',
+                        data: p2,
+                    },
+                    {
+                        label: 'BJP',
+                        data: p1,
+
+                    }
+                ]
+
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Comparison of percentage of money donated by top common donators of BJP and INC',
+                            color: '#fff'
+                        },
+                        customCanvasBackgroundColor: {
+                            color: '#495057',
+                        }
+                    },
+                    scales: {
+                        r: {
+                            grid: {
+                                color: 'pink',
+                            },
+                            angleLines: {
+                                color: '#fff'
+                            },
+                            pointLabels:{
+                                color:"#fff"
+                            }
+                        }
+                    }
+                },
+                plugins: [plugin],
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
+
+}
+
+bonus3()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function myg1() {
 
     fetch('/myg1', {
@@ -1255,7 +1646,7 @@ function myg1() {
 
                 },
                 options: {
-                    response: true,
+                    responsive: true,
                     // maintainAspectRatio: false,
                     plugins: {
                         legend: {

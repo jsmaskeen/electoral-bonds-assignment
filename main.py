@@ -5,13 +5,14 @@ from uuid import uuid4
 import config as c
 from functools import wraps
 import datetime
+import os
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = str(uuid4())
-app.config['MYSQL_HOST'] = c.host
-app.config['MYSQL_USER'] = c.username
-app.config['MYSQL_PASSWORD'] = c.password
-app.config['MYSQL_DB'] = c.dbname
+app.config['MYSQL_HOST'] = os.environ.get('mysqlhost',c.host)
+app.config['MYSQL_USER'] = os.environ.get('mysqlusername',c.username)
+app.config['MYSQL_PASSWORD'] = os.environ.get('mysqlpassword',c.password)
+app.config['MYSQL_DB'] = os.environ.get('mysqldbname',c.dbname)
 mysql = MySQL(app)
 
 import helpers.dbf as dbf
@@ -98,9 +99,21 @@ def amount_for_all_parties():
     return jsonify(res)
 
 @is_tbl_joined
-@app.route('/myg1',methods=['POST'])
-def myg1():
-    res = dbf.comany_party_amount(mysql)
+@app.route('/bonus1',methods=['POST'])
+def bonus_1():
+    res = dbf.bonus1_q(mysql)
+    return jsonify(res)
+
+@is_tbl_joined
+@app.route('/bonus2',methods=['POST'])
+def bonus_2():
+    res = dbf.bonus2_q(mysql)
+    return jsonify(res)
+
+@is_tbl_joined
+@app.route('/bonus3',methods=['POST'])
+def bonus_3():
+    res = dbf.bonus3_q(mysql)
     return jsonify(res)
 
 

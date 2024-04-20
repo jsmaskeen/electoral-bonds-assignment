@@ -234,3 +234,60 @@ NameOfThePoliticalParty;
     d = cur.fetchall()
     cur.close()
     return d
+
+def bonus1_q(mysql):
+    query = """select sum(BeDenominations),NameOfThePoliticalParty from be_bp_joined
+where BpBondNumber is null
+group by NameOfThePoliticalParty;
+"""
+    cur: curobj = mysql.connection.cursor()
+    cur.execute(query)
+    d = cur.fetchall()
+    cur.close()
+    return d
+
+def bonus2_q(mysql):
+    query = """select count(BpDenominations),
+sum(BpDenominations),BpDenominations
+from bonds_purchased
+group by BpDenominations;
+"""
+    cur: curobj = mysql.connection.cursor()
+    cur.execute(query)
+    d = cur.fetchall()
+    cur.close()
+    return d
+
+
+def bonus3_q(mysql):
+    query = """select * from 
+(select sum(BeDenominations) as bjp,NameOfThePurchaser from be_bp_joined where NameOfThePoliticalParty="BHARATIYA JANATA PARTY" group by NameOfThePurchaser) as m
+inner join
+(select sum(BeDenominations) as congress,NameOfThePurchaser from be_bp_joined where NameOfThePoliticalParty="PRESIDENT, ALL INDIA CONGRESS COMMITTEE" group by NameOfThePurchaser) as t
+using (NameOfThePurchaser);
+"""
+    cur: curobj = mysql.connection.cursor()
+    cur.execute(query)
+    d = cur.fetchall()
+    cur.close()
+    ls = []
+    for row in d:
+        t = []
+        t.append(row[0])
+        vv = get_comp_donation(mysql,row[0])
+        t.append(row[1]*100/vv)
+        t.append(row[2]*100/vv)
+        t.append(row[1]+row[2])
+        ls.append(t)
+    ls.sort(key = lambda x:x[3],reverse=True)
+    return ls
+
+def get_comp_donation(mysql,compname):
+    query = f"""select sum(BpDenominations) from bonds_purchased where NameOfThePurchaser="{compname}";
+"""
+    cur: curobj = mysql.connection.cursor()
+    cur.execute(query)
+    d = cur.fetchall()
+    cur.close()
+    # print(d)
+    return int(d[0][0])
