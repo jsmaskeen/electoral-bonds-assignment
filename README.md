@@ -27,7 +27,13 @@
 - `python main.py`
 - Navigate to [http://127.0.0.1:5540](http://127.0.0.1:5540/)
 
+### Video of working and UI [Click image]
+[![Video](https://img.youtube.com/vi/9DTzZBrJkqA/maxresdefault.jpg)](https://www.youtube.com/watch?v=9DTzZBrJkqA)
+
 ### Screenshots of Questions and UI
+
+#### First step is to join the tables (has to be done only once)
+![](https://i.imgur.com/1x513j8.png)
 
 #### Q1:
 ##### Search Form

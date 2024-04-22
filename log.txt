@@ -1,0 +1,26 @@
+2024-04-22:09:10:15,752 WARNING  [_internal.py:96]  * Debugger is active!
+2024-04-22:09:10:15,762 INFO     [_internal.py:96]  * Debugger PIN: 368-596-298
+2024-04-22:09:10:18,316 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "GET / HTTP/1.1" 200 -
+2024-04-22:09:10:18,521 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2024-04-22:09:10:18,526 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-04-22:09:10:18,571 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "POST /bonus2 HTTP/1.1" 200 -
+2024-04-22:09:10:18,575 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "[35m[1mPOST /bonus3 HTTP/1.1[0m" 500 -
+2024-04-22:09:10:18,576 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "[35m[1mPOST /bonus1 HTTP/1.1[0m" 500 -
+2024-04-22:09:10:18,595 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:18] "POST /amount_for_all_parties HTTP/1.1" 200 -
+2024-04-22:09:10:21,820 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:21] "[32mPOST /join_dbs HTTP/1.1[0m" 302 -
+2024-04-22:09:10:21,872 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:21] "GET / HTTP/1.1" 200 -
+2024-04-22:09:10:21,950 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:21] "GET / HTTP/1.1" 200 -
+2024-04-22:09:10:21,992 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:21] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-04-22:09:10:21,994 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:21] "[36mGET /static/js/script.js HTTP/1.1[0m" 304 -
+2024-04-22:09:10:22,089 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:22] "POST /bonus2 HTTP/1.1" 200 -
+2024-04-22:09:10:22,089 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:22] "POST /bonus1 HTTP/1.1" 200 -
+2024-04-22:09:10:22,097 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:22] "POST /amount_for_all_parties HTTP/1.1" 200 -
+2024-04-22:09:10:22,898 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:22] "POST /bonus3 HTTP/1.1" 200 -
+2024-04-22:09:10:31,246 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:31] "POST /search_filter HTTP/1.1" 200 -
+2024-04-22:09:10:47,615 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:10:47] "POST /search_filter HTTP/1.1" 200 -
+2024-04-22:09:11:03,205 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:11:03] "POST /search_bonddata_for_individual HTTP/1.1" 200 -
+2024-04-22:09:11:10,921 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:11:10] "POST /search_bonddata_for_individual HTTP/1.1" 200 -
+2024-04-22:09:11:29,804 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:11:29] "POST /search_bonddata_for_polparty HTTP/1.1" 200 -
+2024-04-22:09:11:38,221 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:11:38] "POST /polparty_comapny_contri HTTP/1.1" 200 -
+2024-04-22:09:12:10,081 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:12:10] "POST /polparty_comapny_contri HTTP/1.1" 200 -
+2024-04-22:09:12:25,208 INFO     [_internal.py:96] 127.0.0.1 - - [22/Apr/2024 09:12:25] "POST /company_polparty_contri HTTP/1.1" 200 -
